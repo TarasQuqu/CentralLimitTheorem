@@ -1,0 +1,46 @@
+clf
+xtitle('Taras Kuts')
+
+t=(-3):0.2:3;
+//plot(t,1/sqrt(2*%pi)*exp(-t.^2/2));
+
+sigma = 1;
+mi=0.5;
+function res=Rand_n(sigma,mi) 
+    n=10;
+    Sn=sum(rand(n,1,'uni'));
+    res=(Sn-n*mi)/(sqrt(n*1/12)*sigma);
+endfunction
+
+M=10000;
+data=zeros(M);
+for i=1:1:M 
+    data(i)= Rand_n(sigma,mi);
+end
+
+
+//histplot(10,data)
+
+/*
+
+var=0
+for i=1:1:length(t)
+    var(i)=length(find(data<t(i)))/M;
+end
+plot(t,var)
+
+
+var=0
+for i=1:1:length(t)
+    [P,Q]=cdfnor("PQ",t(i),0,1);
+    var(i)=P;
+end
+plot(t,var,"green")
+
+*/
+
+var=0
+for i=1:1:length(t)
+    var(i)=length(find(data>t(i)&data<t(i)+0.2))/M*5;
+end
+plot(t,var)
